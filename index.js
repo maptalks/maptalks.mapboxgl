@@ -121,6 +121,9 @@ MapboxglLayer.registerRenderer('dom', class {
                 zoom: map.getZoom() - 1
             });
             this.glmap = new mapboxgl.Map(options);
+            this.glmap.on('load', () => {
+                this.layer.fire('layerload');
+            });
         }
     }
 

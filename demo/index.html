@@ -18,33 +18,62 @@
     </style>
 </head>
 <body>
-<div><a href="javascript:tiltMap();">pitch</a> | <a href="javascript:rotateMap();">rotate</a> | <a href="javascript:restoreMap();">reset</a></div></div>
+<div><a href="javascript:start();">start</a> | <a href="javascript:pause();">pause</a> | <a href="javascript:reset();">reset</a></div></div>
 <div id="map"></div>
 <script type="text/javascript" >
     mapboxgl.accessToken = 'pk.eyJ1IjoiemhlbmZ1IiwiYSI6ImNpb284bzNoYzAwM3h1Ym02aHlrand6OTAifQ.sKX-XKJMmgtk_oI5oIUV_g';
+
+    var baseLayer = new maptalks.MapboxglLayer('tile').on('layerload', changeView);
 
     var map = new maptalks.Map("map",{
         centerCross:true,
         center:   [121.28906254193978, 31.052457341313005],
         zoom   :  10,
-        baseLayer : new maptalks.MapboxglLayer('tile')
+        baseLayer : baseLayer
     });
 
-    function tiltMap() {
-      map.setPitch(60);
+    var pitch = 0, d = 'up', bearing = 0;
+    var paused = false;
+
+    function changeView() {
+      if (pitch > 50) {
+        d = 'down';
+      } else if (pitch < 0) {
+        d = 'up';
+      }
+      if (d === 'down') {
+        pitch--;
+      } else {
+        pitch++;
+      }
+      map.setPitch(pitch);
+      map.setBearing(bearing++);
+      if (!paused) {
+        requestAnimationFrame(changeView);
+      }
     }
 
-    function rotateMap() {
-      map.setBearing(40);
-    }
-
-    function restoreMap() {
-      if (map.getPitch()) {
+    function reset() {
+      requestAnimationFrame(function () {
+        paused = true;
+        pitch = 0;
+        bearing = 0;
         map.setPitch(0);
-      }
-      if (map.getBearing()) {
         map.setBearing(0);
-      }
+      });
+    }
+
+    function start() {
+        paused = false;
+        changeView();
+    }
+
+    function pause() {
+        paused = true;
+    }
+
+    function reset() {
+        reset();
     }
 </script>
 </body>
