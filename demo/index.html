@@ -18,6 +18,7 @@
     </style>
 </head>
 <body>
+<div><a href="javascript:tiltMap();">pitch</a> | <a href="javascript:rotateMap();">rotate</a> | <a href="javascript:restoreMap();">reset</a></div></div>
 <div id="map"></div>
 <script type="text/javascript" >
     mapboxgl.accessToken = 'pk.eyJ1IjoiemhlbmZ1IiwiYSI6ImNpb284bzNoYzAwM3h1Ym02aHlrand6OTAifQ.sKX-XKJMmgtk_oI5oIUV_g';
@@ -29,6 +30,22 @@
         baseLayer : new maptalks.MapboxglLayer('tile')
     });
 
+    function tiltMap() {
+      map.setPitch(60);
+    }
+
+    function rotateMap() {
+      map.setBearing(40);
+    }
+
+    function restoreMap() {
+      if (map.getPitch()) {
+        map.setPitch(0);
+      }
+      if (map.getBearing()) {
+        map.setBearing(0);
+      }
+    }
 </script>
 </body>
 </html>
