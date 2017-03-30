@@ -3,8 +3,7 @@
 <head>
     <title>maptalks.markercluster demo</title>
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/maptalks/dist/maptalks.css">
-    <!-- <script type="text/javascript" src="https://unpkg.com/maptalks/dist/maptalks.min.js"></script> -->
-    <script type="text/javascript" src="http://localhost:20000/maptalks.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/maptalks/dist/maptalks.min.js"></script>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.css' rel='stylesheet' />
     <script type="text/javascript" src="../dist/maptalks.mapboxgl.js"></script>
@@ -28,13 +27,6 @@
         center:   [121.28906254193978, 31.052457341313005],
         zoom   :  10,
         baseLayer : new maptalks.MapboxglLayer('tile')
-    });
-
-    var v = new maptalks.VectorLayer('v', {drawImmediate : true}).addTo(map);
-    var marker = new maptalks.Marker(map.getCenter()).addTo(v);
-
-    map.on('zooming', function (e) {
-        marker.setCoordinates(map.getCenter());
     });
 
 </script>

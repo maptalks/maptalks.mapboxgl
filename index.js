@@ -127,7 +127,7 @@ MapboxglLayer.registerRenderer('dom', class {
     getEvents() {
         return {
             '_zoomend _moving _moveend _pitch _rotate' : this.onEvent,
-            '_zooming' : this.onEvent,
+            '_zooming' : this.onZooming,
             'resize' : this.onResize
         };
     }
@@ -158,10 +158,10 @@ MapboxglLayer.registerRenderer('dom', class {
             origin = map.containerPointToCoordinate(origin);
             origin = new mapboxgl.LngLat(origin.x, origin.y);
             const cameraOptions = {
-                'zoom'   : map.getZoom() - 1,
-                'around' : origin
+                'around' : origin,
+                'duration' : 0
             };
-            this.glmap.jumpTo(cameraOptions);
+            this.glmap.zoomTo(map.getZoom() - 1, cameraOptions);
         }
     }
 
