@@ -15,4 +15,8 @@ describe('MapboxglLayer', function () {
         map.remove();
         maptalks.DomUtil.removeDomNode(container);
     });
+
+    it('should display when added to map', function () {
+        // new maptalks.MapboxglLayer('g').addTo(map);
+    });
 });

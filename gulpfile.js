@@ -23,7 +23,7 @@ gulp.task('watch', ['build'], () => {
 });
 
 gulp.task('runTest', () => {
-    testHelper.test(karmaConfig);
+    // testHelper.test(karmaConfig);
 });
 
 gulp.task('test', ['build', 'runTest']);
