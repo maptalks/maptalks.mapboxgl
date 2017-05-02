@@ -4,8 +4,8 @@
     <title>maptalks.mapboxgl demo</title>
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/maptalks/dist/maptalks.css">
     <script type="text/javascript" src="https://unpkg.com/maptalks/dist/maptalks.min.js"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.css' rel='stylesheet' />
     <script type="text/javascript" src="../dist/maptalks.mapboxgl.js"></script>
     <style>
         html,body{
@@ -23,11 +23,16 @@
 <script type="text/javascript" >
     mapboxgl.accessToken = 'pk.eyJ1IjoiemhlbmZ1IiwiYSI6ImNpb284bzNoYzAwM3h1Ym02aHlrand6OTAifQ.sKX-XKJMmgtk_oI5oIUV_g';
 
-    var baseLayer = new maptalks.MapboxglLayer('tile').on('layerload', changeView);
+    var baseLayer = new maptalks.MapboxglLayer('tile',{
+        glOptions : {
+            'style' : 'mapbox://styles/mapbox/light-v9'
+        }
+    }).on('layerload', function () {
+        start();
+    });
 
     var map = new maptalks.Map("map",{
-        centerCross:true,
-        center:   [121.28906254193978, 31.052457341313005],
+        center:   [-0.138183, 51.44456],
         zoom   :  10,
         baseLayer : baseLayer
     });
