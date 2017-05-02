@@ -2,7 +2,7 @@
 
 [![NPM Version](https://img.shields.io/npm/v/maptalks.mapboxgl.svg)](https://github.com/maptalks/maptalks.mapboxgl)
 
-A plugin to add [mapbox-gl-js](https://github.com/mapbox/mapbox-gl-js) as a layer for maptalks.js.
+A plugin to add [mapbox-gl-js](https://github.com/mapbox/mapbox-gl-js) as a layer for [maptalks.js](https://github.com/maptalks/maptalks.js).
 
 ![screenshot](https://cloud.githubusercontent.com/assets/13678919/25611501/ec90d0a4-2f59-11e7-91b5-1ed6c7b9352d.jpg)
 
