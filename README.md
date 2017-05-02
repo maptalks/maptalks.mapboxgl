@@ -18,12 +18,12 @@ A plugin to add [mapbox-gl-js](https://github.com/mapbox/mapbox-gl-js) as a laye
 
 ## Usage
 
-As a plugin, ```maptalks.mapboxgl``` must be loaded after ```maptalks.js``` in browsers.
+As a plugin, `maptalks.mapboxgl` must be loaded after `maptalks.js` and `mapbox-gl.js` in browsers.
 ```html
 <script type="text/javascript" src="https://unpkg.com/maptalks/dist/maptalks.min.js"></script>
-<script type="text/javascript" src="https://unpkg.com/maptalks.mapboxgl/dist/maptalks.mapboxgl.min.js"></script>
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.css' rel='stylesheet' />
+<script type="text/javascript" src="https://unpkg.com/maptalks.mapboxgl/dist/maptalks.mapboxgl.min.js"></script>
 <script>
 var mapboxglLayer = new maptalks.MapboxglLayer('tile',{
         glOptions : {
