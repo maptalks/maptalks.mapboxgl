@@ -44,16 +44,15 @@ IE 11, Chrome, Firefox, other modern and mobile browsers support WebGL.
 ### `Constructor`
 
 ```javascript
-new maptalks.MapboxglLayer(id, data, options)
+new maptalks.MapboxglLayer(id, options)
 ```
 
 * id **String** layer id
-* data **Marker[]** layer data, an array of maptalks.Marker
 * options **Object** options
     * glOptions **Object** mapboxgl creation options defined in [mapbox-gl-js api doc](https://www.mapbox.com/mapbox-gl-js/api/#map)
     * other options defined in [maptalks.Layer](http://docs.maptalks.org/api/maptalks.Layer.html)
 
-### `getGlMap`
+### `getGlMap()`
 
 get mapbox-gl-js map instance used by the layer
 
