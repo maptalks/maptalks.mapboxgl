@@ -1,10 +1,10 @@
 /*!
- * maptalks.mapboxgl v0.1.0
+ * maptalks.mapboxgl v0.2.0
  * LICENSE : MIT
  * (c) 2016-2017 maptalks.org
  */
 /*!
- * requires maptalks@^0.23.0 
+ * requires maptalks@^0.25.0 
  */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('maptalks'), require('mapboxgl')) :
@@ -140,8 +140,10 @@ MapboxglLayer.registerRenderer('dom', function () {
         }
     };
 
-    _class.prototype.isCanvasRender = function isCanvasRender() {
-        return false;
+    _class.prototype.needToRedraw = function needToRedraw() {
+        var map = this.getMap();
+        var renderer = map._getRenderer();
+        return map.isInteracting() || renderer && renderer.isStateChanged();
     };
 
     _class.prototype.render = function render() {
@@ -163,47 +165,37 @@ MapboxglLayer.registerRenderer('dom', function () {
                 _this2.layer.fire('layerload');
             });
         }
+        this._syncMap();
     };
 
-    _class.prototype.getEvents = function getEvents() {
-        return {
-            '_zoomend _moving _moveend _pitch _rotate': this.onEvent,
-            '_zooming': this.onZooming,
-            'resize': this.onResize
-        };
-    };
-
-    _class.prototype.onResize = function onResize() {
-        this._resize();
-        this.onEvent();
-    };
-
-    _class.prototype.onEvent = function onEvent() {
-        if (this.glmap) {
-            var map = this.getMap();
-            var center = map.getCenter();
-            var cameraOptions = {
-                'center': new mapboxgl.LngLat(center.x, center.y),
-                'zoom': map.getZoom() - 1,
-                'bearing': map.getBearing(),
-                'pitch': map.getPitch()
-            };
-            this.glmap.jumpTo(cameraOptions);
+    _class.prototype.drawOnInteracting = function drawOnInteracting(e) {
+        var map = this.getMap();
+        if (!this.glmap || !map) {
+            return;
         }
-    };
-
-    _class.prototype.onZooming = function onZooming(param) {
-        if (this.glmap) {
-            var map = this.getMap();
-            var origin = param['origin'];
+        if (map.isZooming() && e.origin) {
+            var origin = e['origin'];
             origin = map.containerPointToCoordinate(origin);
             origin = new mapboxgl.LngLat(origin.x, origin.y);
             var cameraOptions = {
                 'around': origin,
                 'duration': 0
             };
+            // use zoomTo instead of jumpTo, becos we need to set around to zoom around zoom origin point.
             this.glmap.zoomTo(map.getZoom() - 1, cameraOptions);
+        } else {
+            this._syncMap();
         }
+    };
+
+    _class.prototype.getEvents = function getEvents() {
+        return {
+            'resize': this.onResize
+        };
+    };
+
+    _class.prototype.onResize = function onResize() {
+        this._resize();
     };
 
     _class.prototype._createLayerContainer = function _createLayerContainer() {
@@ -225,6 +217,9 @@ MapboxglLayer.registerRenderer('dom', function () {
         var size = this.getMap().getSize();
         container.style.width = size['width'] + 'px';
         container.style.height = size['height'] + 'px';
+        if (this.glmap) {
+            this.glmap.resize();
+        }
     };
 
     _class.prototype._show = function _show() {
@@ -235,6 +230,21 @@ MapboxglLayer.registerRenderer('dom', function () {
         this._container.style.display = 'none';
     };
 
+    _class.prototype._syncMap = function _syncMap() {
+        var map = this.getMap();
+        if (!this.glmap || !map) {
+            return;
+        }
+        var center = map.getCenter();
+        var cameraOptions = {
+            'center': new mapboxgl.LngLat(center.x, center.y),
+            'zoom': map.getZoom() - 1,
+            'bearing': map.getBearing(),
+            'pitch': map.getPitch()
+        };
+        this.glmap.jumpTo(cameraOptions);
+    };
+
     return _class;
 }());
 
@@ -242,6 +252,6 @@ exports.MapboxglLayer = MapboxglLayer;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-typeof console !== 'undefined' && console.log('maptalks.mapboxgl v0.1.0, requires maptalks@^0.23.0.');
+typeof console !== 'undefined' && console.log('maptalks.mapboxgl v0.2.0, requires maptalks@^0.25.0.');
 
 })));
