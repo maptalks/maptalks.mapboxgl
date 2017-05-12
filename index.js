@@ -104,8 +104,10 @@ MapboxglLayer.registerRenderer('dom', class {
         }
     }
 
-    isCanvasRender() {
-        return false;
+    needToRedraw() {
+        const map = this.getMap();
+        const renderer = map._getRenderer();
+        return map.isInteracting() || renderer && renderer.isStateChanged();
     }
 
     render() {
@@ -125,57 +127,47 @@ MapboxglLayer.registerRenderer('dom', class {
                 this.layer.fire('layerload');
             });
         }
+        this._syncMap();
     }
 
-    getEvents() {
-        return {
-            '_zoomend _moving _moveend _pitch _rotate' : this.onEvent,
-            '_zooming' : this.onZooming,
-            'resize' : this.onResize
-        };
-    }
-
-    onResize() {
-        this._resize();
-        this.onEvent();
-    }
-
-    onEvent() {
-        if (this.glmap) {
-            const map = this.getMap();
-            const center = map.getCenter();
-            const cameraOptions = {
-                'center' : new mapboxgl.LngLat(center.x, center.y),
-                'zoom'   : map.getZoom() - 1,
-                'bearing' : map.getBearing(),
-                'pitch' : map.getPitch()
-            };
-            this.glmap.jumpTo(cameraOptions);
+    drawOnInteracting(e) {
+        const map = this.getMap();
+        if (!this.glmap || !map) {
+            return;
         }
-    }
-
-    onZooming(param) {
-        if (this.glmap) {
-            const map = this.getMap();
-            var origin = param['origin'];
+        if (map.isZooming() && e.origin) {
+            let origin = e['origin'];
             origin = map.containerPointToCoordinate(origin);
             origin = new mapboxgl.LngLat(origin.x, origin.y);
             const cameraOptions = {
                 'around' : origin,
                 'duration' : 0
             };
+            // use zoomTo instead of jumpTo, becos we need to set around to zoom around zoom origin point.
             this.glmap.zoomTo(map.getZoom() - 1, cameraOptions);
+        } else {
+            this._syncMap();
         }
     }
 
+    getEvents() {
+        return {
+            'resize' : this.onResize
+        };
+    }
+
+    onResize() {
+        this._resize();
+    }
+
     _createLayerContainer() {
-        var container = this._container = maptalks.DomUtil.createEl('div', 'maptalks-mapboxgllayer');
+        const container = this._container = maptalks.DomUtil.createEl('div', 'maptalks-mapboxgllayer');
         container.style.cssText = 'position:absolute;';
         this._resize();
         if (this._zIndex) {
             container.style.zIndex = this._zIndex;
         }
-        var parent = this.layer.options['container'] === 'front' ? this.getMap()._panels['frontStatic'] : this.getMap()._panels['backStatic'];
+        const parent = this.layer.options['container'] === 'front' ? this.getMap()._panels['frontStatic'] : this.getMap()._panels['backStatic'];
         parent.appendChild(container);
     }
 
@@ -187,6 +179,10 @@ MapboxglLayer.registerRenderer('dom', class {
         const size = this.getMap().getSize();
         container.style.width = size['width'] + 'px';
         container.style.height = size['height'] + 'px';
+        if (this.glmap) {
+            this.glmap.resize();
+        }
+
     }
 
     _show() {
@@ -195,5 +191,20 @@ MapboxglLayer.registerRenderer('dom', class {
 
     _hide() {
         this._container.style.display = 'none';
+    }
+
+    _syncMap() {
+        const map = this.getMap();
+        if (!this.glmap || !map) {
+            return;
+        }
+        const center = map.getCenter();
+        const cameraOptions = {
+            'center' : new mapboxgl.LngLat(center.x, center.y),
+            'zoom'   : map.getZoom() - 1,
+            'bearing' : map.getBearing(),
+            'pitch' : map.getPitch()
+        };
+        this.glmap.jumpTo(cameraOptions);
     }
 });
