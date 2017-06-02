@@ -39,7 +39,7 @@ IE 11, Chrome, Firefox, other modern and mobile browsers support WebGL.
 
 ## API Reference
 
-```MapboxglLayer``` is a subclass of [maptalks.Layer](http://docs.maptalks.org/api/maptalks.Layer.html) and inherits all the methods of its parent.
+```MapboxglLayer``` is a subclass of [maptalks.Layer](https://maptalks.github.io/docs/api/Layer.html) and inherits all the methods of its parent.
 
 ### `Constructor`
 
@@ -50,7 +50,7 @@ new maptalks.MapboxglLayer(id, options)
 * id **String** layer id
 * options **Object** options
     * glOptions **Object** mapboxgl creation options defined in [mapbox-gl-js api doc](https://www.mapbox.com/mapbox-gl-js/api/#map)
-    * other options defined in [maptalks.Layer](http://docs.maptalks.org/api/maptalks.Layer.html)
+    * other options defined in [maptalks.Layer](https://maptalks.github.io/docs/api/Layer.html)
 
 ### `getGlMap()`
 
