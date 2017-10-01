@@ -107,7 +107,7 @@ MapboxglLayer.registerRenderer('dom', class {
     needToRedraw() {
         const map = this.getMap();
         const renderer = map._getRenderer();
-        return map.isInteracting() || renderer && renderer.isStateChanged();
+        return map.isInteracting() || renderer && renderer.isViewChanged();
     }
 
     render() {
