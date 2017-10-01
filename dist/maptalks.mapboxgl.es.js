@@ -6,13 +6,8 @@
 /*!
  * requires maptalks@>=0.29.0 
  */
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('maptalks'), require('mapboxgl')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'maptalks', 'mapboxgl'], factory) :
-	(factory((global.maptalks = global.maptalks || {}),global.maptalks,global.mapboxgl));
-}(this, (function (exports,maptalks,mapboxgl) { 'use strict';
-
-mapboxgl = mapboxgl && mapboxgl.hasOwnProperty('default') ? mapboxgl['default'] : mapboxgl;
+import { DomUtil, Layer, Util } from 'maptalks';
+import mapboxgl from 'mapboxgl';
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
 
@@ -79,7 +74,7 @@ var MapboxglLayer = function (_maptalks$Layer) {
     };
 
     return MapboxglLayer;
-}(maptalks.Layer);
+}(Layer);
 
 // merge to define MapboxglLayer's default options.
 MapboxglLayer.mergeOptions(options);
@@ -121,7 +116,7 @@ MapboxglLayer.registerRenderer('dom', function () {
             this.glmap.remove();
         }
         if (this._container) {
-            maptalks.DomUtil.removeDomNode(this._container);
+            DomUtil.removeDomNode(this._container);
         }
         delete this._container;
         delete this.glmap;
@@ -155,7 +150,7 @@ MapboxglLayer.registerRenderer('dom', function () {
         if (!this.glmap) {
             var map = this.getMap();
             var center = map.getCenter();
-            var _options = maptalks.Util.extend({}, this.layer.options['glOptions'], {
+            var _options = Util.extend({}, this.layer.options['glOptions'], {
                 container: this._container,
                 center: new mapboxgl.LngLat(center.x, center.y),
                 zoom: map.getZoom() - 1
@@ -199,7 +194,7 @@ MapboxglLayer.registerRenderer('dom', function () {
     };
 
     _class.prototype._createLayerContainer = function _createLayerContainer() {
-        var container = this._container = maptalks.DomUtil.createEl('div', 'maptalks-mapboxgllayer');
+        var container = this._container = DomUtil.createEl('div', 'maptalks-mapboxgllayer');
         container.style.cssText = 'position:absolute;';
         this._resize();
         if (this._zIndex) {
@@ -248,10 +243,6 @@ MapboxglLayer.registerRenderer('dom', function () {
     return _class;
 }());
 
-exports.MapboxglLayer = MapboxglLayer;
-
-Object.defineProperty(exports, '__esModule', { value: true });
+export { MapboxglLayer };
 
 typeof console !== 'undefined' && console.log('maptalks.mapboxgl v0.3.0, requires maptalks@>=0.29.0.');
-
-})));

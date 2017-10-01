@@ -1,6 +1,6 @@
 {
   "name": "maptalks.mapboxgl",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "MapboxglLayer for maptalks.js.",
   "license": "MIT",
   "repository": {
