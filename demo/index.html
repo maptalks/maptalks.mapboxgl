@@ -32,6 +32,8 @@
     });
 
     var map = new maptalks.Map("map",{
+        //limit max pitch to 60 as mapbox-gl-js required
+        maxPitch : 60,
         center:   [-0.138183, 51.44456],
         zoom   :  10,
         baseLayer : baseLayer
