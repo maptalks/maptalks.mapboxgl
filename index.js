@@ -130,24 +130,12 @@ MapboxglLayer.registerRenderer('dom', class {
         this._syncMap();
     }
 
-    drawOnInteracting(e) {
+    drawOnInteracting() {
         const map = this.getMap();
         if (!this.glmap || !map) {
             return;
         }
-        if (map.isZooming() && e.origin) {
-            let origin = e['origin'];
-            origin = map.containerPointToCoordinate(origin);
-            origin = new mapboxgl.LngLat(origin.x, origin.y);
-            const cameraOptions = {
-                'around' : origin,
-                'duration' : 0
-            };
-            // use zoomTo instead of jumpTo, becos we need to set around to zoom around zoom origin point.
-            this.glmap.zoomTo(map.getZoom() - 1, cameraOptions);
-        } else {
-            this._syncMap();
-        }
+        this._syncMap();
     }
 
     getEvents() {
