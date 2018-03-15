@@ -11,6 +11,8 @@
   "module": "dist/maptalks.mapboxgl.es.js",
   "jsnext:main": "dist/maptalks.mapboxgl.es.js",
   "scripts": {
+    "dev" : "gulp watch",
+    "build" : "gulp minify",
     "preversion": "npm test",
     "version": "gulp minify && git add -A dist",
     "lint": "eslint index.js test/**/*.js",
