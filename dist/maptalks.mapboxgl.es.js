@@ -1,7 +1,7 @@
 /*!
- * maptalks.mapboxgl v0.3.0
+ * maptalks.mapboxgl v0.3.1
  * LICENSE : MIT
- * (c) 2016-2017 maptalks.org
+ * (c) 2016-2018 maptalks.org
  */
 /*!
  * requires maptalks@>=0.29.0 
@@ -163,24 +163,12 @@ MapboxglLayer.registerRenderer('dom', function () {
         this._syncMap();
     };
 
-    _class.prototype.drawOnInteracting = function drawOnInteracting(e) {
+    _class.prototype.drawOnInteracting = function drawOnInteracting() {
         var map = this.getMap();
         if (!this.glmap || !map) {
             return;
         }
-        if (map.isZooming() && e.origin) {
-            var origin = e['origin'];
-            origin = map.containerPointToCoordinate(origin);
-            origin = new mapboxgl.LngLat(origin.x, origin.y);
-            var cameraOptions = {
-                'around': origin,
-                'duration': 0
-            };
-            // use zoomTo instead of jumpTo, becos we need to set around to zoom around zoom origin point.
-            this.glmap.zoomTo(map.getZoom() - 1, cameraOptions);
-        } else {
-            this._syncMap();
-        }
+        this._syncMap();
     };
 
     _class.prototype.getEvents = function getEvents() {
@@ -245,4 +233,4 @@ MapboxglLayer.registerRenderer('dom', function () {
 
 export { MapboxglLayer };
 
-typeof console !== 'undefined' && console.log('maptalks.mapboxgl v0.3.0, requires maptalks@>=0.29.0.');
+typeof console !== 'undefined' && console.log('maptalks.mapboxgl v0.3.1, requires maptalks@>=0.29.0.');

@@ -1,6 +1,6 @@
 {
   "name": "maptalks.mapboxgl",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "MapboxglLayer for maptalks.js.",
   "license": "MIT",
   "repository": {
@@ -11,8 +11,8 @@
   "module": "dist/maptalks.mapboxgl.es.js",
   "jsnext:main": "dist/maptalks.mapboxgl.es.js",
   "scripts": {
-    "dev" : "gulp watch",
-    "build" : "gulp minify",
+    "dev": "gulp watch",
+    "build": "gulp minify",
     "preversion": "npm test",
     "version": "gulp minify && git add -A dist",
     "lint": "eslint index.js test/**/*.js",
