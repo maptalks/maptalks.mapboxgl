@@ -7,8 +7,8 @@
  * requires maptalks@>=0.29.0 
  */
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('maptalks'), require('mapboxgl')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'maptalks', 'mapboxgl'], factory) :
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('maptalks'), require('mapbox-gl')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'maptalks', 'mapbox-gl'], factory) :
 	(factory((global.maptalks = global.maptalks || {}),global.maptalks,global.mapboxgl));
 }(this, (function (exports,maptalks,mapboxgl) { 'use strict';
 

@@ -1,5 +1,5 @@
 import * as maptalks from 'maptalks';
-import mapboxgl from 'mapboxgl';
+import mapboxgl from 'mapbox-gl';
 
 const options = {
     'renderer' : 'dom',
