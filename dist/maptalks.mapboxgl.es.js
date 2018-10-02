@@ -1,5 +1,5 @@
 /*!
- * maptalks.mapboxgl v0.3.1
+ * maptalks.mapboxgl v0.3.2
  * LICENSE : MIT
  * (c) 2016-2018 maptalks.org
  */
@@ -233,4 +233,4 @@ MapboxglLayer.registerRenderer('dom', function () {
 
 export { MapboxglLayer };
 
-typeof console !== 'undefined' && console.log('maptalks.mapboxgl v0.3.1, requires maptalks@>=0.29.0.');
+typeof console !== 'undefined' && console.log('maptalks.mapboxgl v0.3.2, requires maptalks@>=0.29.0.');
