@@ -120,7 +120,7 @@ MapboxglLayer.registerRenderer('dom', class {
             const options = maptalks.Util.extend({}, this.layer.options['glOptions'], {
                 container: this._container,
                 center: new mapboxgl.LngLat(center.x, center.y),
-                zoom: map.getZoom() - 1
+                zoom: getMapBoxZoom(map.getResolution())
             });
             this.glmap = new mapboxgl.Map(options);
             this.glmap.on('load', () => {
@@ -189,10 +189,15 @@ MapboxglLayer.registerRenderer('dom', class {
         const center = map.getCenter();
         const cameraOptions = {
             'center' : new mapboxgl.LngLat(center.x, center.y),
-            'zoom'   : map.getZoom() - 1,
+            'zoom'   : getMapBoxZoom(map.getResolution()),
             'bearing' : map.getBearing(),
             'pitch' : map.getPitch()
         };
         this.glmap.jumpTo(cameraOptions);
     }
 });
+
+const MAX_RES = 2 * 6378137 * Math.PI / (256 * Math.pow(2, 20));
+function getMapBoxZoom(res) {
+    return 19 - Math.log(res / MAX_RES) / Math.LN2;
+}
