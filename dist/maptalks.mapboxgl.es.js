@@ -1,5 +1,5 @@
 /*!
- * maptalks.mapboxgl v0.3.2
+ * maptalks.mapboxgl v0.3.3
  * LICENSE : MIT
  * (c) 2016-2018 maptalks.org
  */
@@ -153,7 +153,7 @@ MapboxglLayer.registerRenderer('dom', function () {
             var _options = Util.extend({}, this.layer.options['glOptions'], {
                 container: this._container,
                 center: new mapboxgl.LngLat(center.x, center.y),
-                zoom: map.getZoom() - 1
+                zoom: getMapBoxZoom(map.getResolution())
             });
             this.glmap = new mapboxgl.Map(_options);
             this.glmap.on('load', function () {
@@ -221,7 +221,7 @@ MapboxglLayer.registerRenderer('dom', function () {
         var center = map.getCenter();
         var cameraOptions = {
             'center': new mapboxgl.LngLat(center.x, center.y),
-            'zoom': map.getZoom() - 1,
+            'zoom': getMapBoxZoom(map.getResolution()),
             'bearing': map.getBearing(),
             'pitch': map.getPitch()
         };
@@ -231,6 +231,11 @@ MapboxglLayer.registerRenderer('dom', function () {
     return _class;
 }());
 
+var MAX_RES = 2 * 6378137 * Math.PI / (256 * Math.pow(2, 20));
+function getMapBoxZoom(res) {
+    return 19 - Math.log(res / MAX_RES) / Math.LN2;
+}
+
 export { MapboxglLayer };
 
-typeof console !== 'undefined' && console.log('maptalks.mapboxgl v0.3.2, requires maptalks@>=0.29.0.');
+typeof console !== 'undefined' && console.log('maptalks.mapboxgl v0.3.3, requires maptalks@>=0.29.0.');
