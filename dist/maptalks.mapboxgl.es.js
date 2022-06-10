@@ -1,5 +1,5 @@
 /*!
- * maptalks.mapboxgl v0.3.3
+ * maptalks.mapboxgl v0.3.4
  * LICENSE : MIT
  * (c) 2016-2018 maptalks.org
  */
@@ -238,4 +238,4 @@ function getMapBoxZoom(res) {
 
 export { MapboxglLayer };
 
-typeof console !== 'undefined' && console.log('maptalks.mapboxgl v0.3.3, requires maptalks@>=0.29.0.');
+typeof console !== 'undefined' && console.log('maptalks.mapboxgl v0.3.4, requires maptalks@>=0.29.0.');
