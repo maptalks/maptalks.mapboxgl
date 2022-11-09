@@ -6,6 +6,14 @@ A plugin to add [mapbox-gl-js](https://github.com/mapbox/mapbox-gl-js) as a laye
 
 ![screenshot](https://cloud.githubusercontent.com/assets/13678919/25611501/ec90d0a4-2f59-11e7-91b5-1ed6c7b9352d.jpg)
 
+## Tips
+
+**This is just a temporary solution for vector tilelayer**
+
+**The webgl context of maptalks and the webgl context of mapboxgl will not be shared**
+
+Please familiarize yourself with the above when you use the plugin, and it is recommended to use the webgl ecology library from maptalks [maptalks-gl-layers](https://github.com/fuzhenn/maptalks-gl-layers)
+
 ## Examples
 
 * [mapbox-gl-js demo with light style](https://maptalks.github.io/maptalks.mapboxgl/demo/).
